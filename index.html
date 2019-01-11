@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <style>
+
+#search-bar-ic {
+  fill: transparent;
+  stroke: white;
+  stroke-width: 7px;
+}
+
+.search-icon{
+  animation-name: search-bar-shape;
+  animation-duration: 0.25s;
+  animation-fill-mode: forwards;
+}
+
+.search-bar-set-active{
+  animation-name: search-bar-shape;
+  animation-duration: 0.25s;
+  animation-direction: reverse;
+  animation-fill-mode: forwards;
+}
+
+.search-bar-active{
+  stroke-linecap: round;
+  animation-name: search-bar-active;
+  animation-duration: 0.4s;
+  animation-direction: alternate;
+  animation-iteration-count: infinite;
+}
+
+#search-input {
+    width: 100%;
+}
+
+@keyframes search-bar-shape {
+
+    0% {
+        d: path('M 2, 29 a 0,0 0 0,0 0,0 a 0,0 0 0,0 0,0 M 2, 2 l 0, 78');
+    }
+    100% {
+        d: path('M 2, 29 a 25,25 0 1,0 50,0 a 25,25 0 1,0 -50,0 M 45, 45 l 30, 30'); 
+    }
+
+}
+
+
+@keyframes search-bar-active {
+
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+
+}
+
+.search-input-container {
+    display: flex;
+}
+
+#search-input {
+    padding: 0px;
+    border: 0px;
+    font-size:30px;
+    border: none !important; 
+    border-width: 0; 
+    box-shadow: none;
+    outline: none;
+
+    color: transparent;
+    text-shadow: 0 0 0 white;
+    background: transparent;
+
+}
+
+.search-label{
+    padding: 10px 30px;
+    background-color: blue;
+    border-radius: 100px;
+}
+</style>
+    
+</head>
+
+<body>
+    <div class="search-input-container">
+
+    <label for="search-input" class="search-label">
+        <input name="search-input" style="width: 200px; float: left; padding-top:10px;" value="woaifeijfiojwe" id="search-input" />
+        <svg xmlns="http://www.w3.org/2000/svg" width="80" height="50" style="float: left"
+        viewBox="0 0 80 80">
+            <!-- <path id="path" class="path-star" /> -->
+        <path id="search-bar-ic" class="search-icon"
+        d="M 2, 2 l 0, 78"
+        />
+        </svg>
+    </div>
+
+    </label>
+
+
+    <script>
+        let x = 0;
+        $(document).ready(function(){
+            $("#search-input").focusin(function(){
+                if(x == 0){
+                    console.log(x)
+                    x = 1;
+                    let ic = $("#search-bar-ic")[0];
+                    ic.replaceWith(ic.cloneNode(true));
+                    let newone = $("#search-bar-ic");
+                    newone.removeClass('search-icon');
+                    newone.addClass('search-bar-set-active');
+                    newone.one("webkitAnimationEnd oanimationend msAnimationEnd animationend",
+                                function(event) {
+                                    newone.addClass('search-bar-active');
+                    });
+                }
+            })
+            $("#search-input").focusout(function(){
+                console.log("fout");
+                x = 0;
+                let ic = $("#search-bar-ic")[0];
+                ic.replaceWith(ic.cloneNode(true));
+                let newone = $("#search-bar-ic");
+                newone.removeClass('search-bar-set-active');
+                newone.removeClass('search-bar-active');
+                newone.addClass('search-icon');
+            })
+            // $("#search-input").keypress(function(){
+            //     // $("#search-input").style.width = ;
+            //     $("#search-input").css({'width': 
+            //         Math.max(($("#search-input").val().length + 1) * 8, 300)
+            //          + 'px'});
+            // })
+        });
+    </script>
+</body>
+</html>
+
+
+    
+    
